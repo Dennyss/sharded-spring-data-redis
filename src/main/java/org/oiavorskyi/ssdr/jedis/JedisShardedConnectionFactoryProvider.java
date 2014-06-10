@@ -6,6 +6,9 @@ import org.oiavorskyi.ssdr.ShardedConnectionFactoryProvider;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class JedisShardedConnectionFactoryProvider extends ShardedConnectionFactoryProvider {
 
 
@@ -26,7 +29,12 @@ public class JedisShardedConnectionFactoryProvider extends ShardedConnectionFact
 
     @Override
     protected RedisConnectionFactory createResilientConnectionFactory( RedisShardSpec shardSpec ) {
-        ResilientJedisConnectionFactory factory = new ResilientJedisConnectionFactory();
+        Set<String> sentinels = new HashSet<>();
+        // Temporary hardcoded for test
+        String sentinel="172.17.14.226:26379";
+        sentinels.add(sentinel);
+
+        ResilientJedisConnectionFactory factory = new ResilientJedisConnectionFactory(shardSpec.getMasterName(), sentinels, shardSpec.getDb());
         factory.afterPropertiesSet();
         return factory;
     }
