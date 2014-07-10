@@ -29,12 +29,7 @@ public class JedisShardedConnectionFactoryProvider extends ShardedConnectionFact
 
     @Override
     protected RedisConnectionFactory createResilientConnectionFactory( RedisShardSpec shardSpec ) {
-        Set<String> sentinels = new HashSet<>();
-        // Temporary hardcoded for test
-        String sentinel="172.17.14.226:26379";
-        sentinels.add(sentinel);
-
-        ResilientJedisConnectionFactory factory = new ResilientJedisConnectionFactory(shardSpec.getMasterName(), sentinels, shardSpec.getDb());
+        ResilientJedisConnectionFactory factory = new ResilientJedisConnectionFactory(shardSpec);
         factory.afterPropertiesSet();
         return factory;
     }

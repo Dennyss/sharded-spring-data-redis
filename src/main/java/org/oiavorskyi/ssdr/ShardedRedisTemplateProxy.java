@@ -61,16 +61,8 @@ public class ShardedRedisTemplateProxy<K, V> implements InitializingBean {
 
     }
 
-    public RedisShardingStrategy<K> getShardingStrategy() {
-        return shardingStrategy;
-    }
-
     public void setShardingStrategy( RedisShardingStrategy<K> shardingStrategy ) {
         this.shardingStrategy = shardingStrategy;
-    }
-
-    public ShardedConnectionFactoryProvider getConnectionFactoryProvider() {
-        return connectionFactoryProvider;
     }
 
     public void setConnectionFactoryProvider(
@@ -78,16 +70,8 @@ public class ShardedRedisTemplateProxy<K, V> implements InitializingBean {
         this.connectionFactoryProvider = connectionFactoryProvider;
     }
 
-    public RedisSerializer<?> getKeySerializer() {
-        return keySerializer;
-    }
-
     public void setKeySerializer( RedisSerializer<?> keySerializer ) {
         this.keySerializer = keySerializer;
-    }
-
-    public RedisSerializer<?> getValueSerializer() {
-        return valueSerializer;
     }
 
     public void setValueSerializer( RedisSerializer<?> valueSerializer ) {

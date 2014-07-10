@@ -3,10 +3,10 @@ package org.oiavorskyi.ssdr.jedis;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.oiavorskyi.ssdr.RedisShardSpec;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnection;
@@ -33,6 +33,10 @@ public class ResilientJedisConnectionFactory implements InitializingBean, Dispos
     private int databaseIndex = Protocol.DEFAULT_DATABASE;
     private boolean convertPipelineAndTxResults = true;
 
+
+    public ResilientJedisConnectionFactory(RedisShardSpec redisShardSpec){
+        this(redisShardSpec.getMasterName(), redisShardSpec.getSentinels(), redisShardSpec.getDb());
+    }
 
     public ResilientJedisConnectionFactory(String masterHostName, Set<String> sentinels) {
         this(masterHostName, sentinels, null);
@@ -80,6 +84,10 @@ public class ResilientJedisConnectionFactory implements InitializingBean, Dispos
         return connection;
     }
 
+    public void recycleConnection(RedisConnection connection){
+        connection.close();
+    }
+
     @Override
     public boolean getConvertPipelineAndTxResults() {
         return convertPipelineAndTxResults;
@@ -103,4 +111,10 @@ public class ResilientJedisConnectionFactory implements InitializingBean, Dispos
     public void setConvertPipelineAndTxResults(boolean convertPipelineAndTxResults) {
         this.convertPipelineAndTxResults = convertPipelineAndTxResults;
     }
+
+    // For testing purpose
+    public JedisSentinelPool getJedisSentinelPool(){
+        return jedisSentinelPool;
+    }
+
 }
