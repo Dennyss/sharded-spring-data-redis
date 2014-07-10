@@ -1,5 +1,6 @@
 package org.oiavorskyi.ssdr;
 
+import org.springframework.util.Assert;
 import redis.clients.util.MurmurHash;
 
 
@@ -10,10 +11,7 @@ public class RedisShardingStrategyImpl implements RedisShardingStrategy<String> 
     private final int totalShardsNumber;
 
     public RedisShardingStrategyImpl(int totalShardsNumber) {
-        if (totalShardsNumber <= 0) {
-            throw new IllegalArgumentException("totalShardsNumber should be positive");
-        }
-
+        Assert.isTrue(totalShardsNumber > 0, "totalShardsNumber should be positive");
         this.totalShardsNumber = totalShardsNumber;
     }
 
@@ -24,13 +22,8 @@ public class RedisShardingStrategyImpl implements RedisShardingStrategy<String> 
 
     @Override
     public int getShardIdByKey(String key) {
-        if (key == null) {
-            throw new NullPointerException("Key should not be null");
-        }
-
-        if (key.trim().isEmpty()) {
-            throw new IllegalArgumentException("Key should not be empty");
-        }
+        Assert.notNull(key, "Key should not be null");
+        Assert.isTrue(!key.trim().isEmpty(), "Key should not be empty");
 
         // Get positive murmur hash of key
         MurmurHash murmurHash = new MurmurHash();
