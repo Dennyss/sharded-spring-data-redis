@@ -1,4 +1,6 @@
-package org.oiavorskyi.ssdr;
+package org.oiavorskyi.ssdr.shardingstrategy;
+
+import org.oiavorskyi.ssdr.specification.RedisShardSpec;
 
 /**
  * Translates shard ID into physical parameters such as host/port,
@@ -7,5 +9,7 @@ package org.oiavorskyi.ssdr;
 public interface RedisShardSpecRegistry {
 
     public RedisShardSpec getShardSpecById(int shardId);
+
+    public int getShardsNumber();
 
 }

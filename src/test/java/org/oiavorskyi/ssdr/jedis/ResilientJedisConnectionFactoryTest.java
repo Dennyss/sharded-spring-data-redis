@@ -1,6 +1,8 @@
 package org.oiavorskyi.ssdr.jedis;
 
 import org.junit.Test;
+import org.oiavorskyi.ssdr.common.PropertyKeys;
+import org.oiavorskyi.ssdr.common.PropertyLoader;
 import org.oiavorskyi.ssdr.utils.TestUtil;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -96,7 +98,7 @@ public class ResilientJedisConnectionFactoryTest {
             throws InterruptedException {
 
         // Configuring sentinel for force failover
-        Jedis sentinel = new Jedis("172.17.34.126", 6381);
+        Jedis sentinel = new Jedis(PropertyLoader.getProperty(PropertyKeys.REDIS_SENTINEL1_HOST), PropertyLoader.getSentinel1Port());
         sentinel.sentinelFailover("masterDB");
 
         waitForFailover(connectionFactory.getJedisSentinelPool(), sentinel);
@@ -122,10 +124,10 @@ public class ResilientJedisConnectionFactoryTest {
 
     private ResilientJedisConnectionFactory createConnectionFactory() {
         Set<String> sentinels = new HashSet<>();
-        sentinels.add("172.17.34.126:6381");
+        sentinels.add(PropertyLoader.getSentinel1HostPort());
 
-        String masterName = "masterDB";
-        String password = "123";
+        String masterName = PropertyLoader.getProperty(PropertyKeys.REDIS_MASTER);
+        String password = PropertyLoader.getProperty(PropertyKeys.REDIS_PASSWORD);
         ResilientJedisConnectionFactory connectionFactory = new ResilientJedisConnectionFactory(masterName, sentinels, password, 1);
         connectionFactory.afterPropertiesSet();
 

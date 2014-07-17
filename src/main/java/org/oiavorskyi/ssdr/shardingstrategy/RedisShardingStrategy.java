@@ -1,4 +1,4 @@
-package org.oiavorskyi.ssdr;
+package org.oiavorskyi.ssdr.shardingstrategy;
 
 /**
  * Calculates shard based on the key

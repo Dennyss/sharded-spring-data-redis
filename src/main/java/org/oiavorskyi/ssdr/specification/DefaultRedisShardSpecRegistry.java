@@ -1,11 +1,11 @@
-package org.oiavorskyi.ssdr;
+package org.oiavorskyi.ssdr.specification;
 
+import org.oiavorskyi.ssdr.shardingstrategy.RedisShardSpecRegistry;
 import org.springframework.util.Assert;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-// TODO: Refactor to contain lenght of registry
 // TODO: Add iterator
 public class DefaultRedisShardSpecRegistry implements RedisShardSpecRegistry {
 
@@ -21,6 +21,11 @@ public class DefaultRedisShardSpecRegistry implements RedisShardSpecRegistry {
                 "be found");
 
         return spec;
+    }
+
+    @Override
+    public int getShardsNumber() {
+        return specs.size();
     }
 
     public void addSpecForShard( int shardId, RedisShardSpec spec ) {

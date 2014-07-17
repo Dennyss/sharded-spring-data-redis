@@ -1,5 +1,7 @@
-package org.oiavorskyi.ssdr;
+package org.oiavorskyi.ssdr.proxy;
 
+import org.oiavorskyi.ssdr.shardingstrategy.RedisShardingStrategy;
+import org.oiavorskyi.ssdr.provider.ShardedConnectionFactoryProvider;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;

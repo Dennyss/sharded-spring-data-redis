@@ -3,7 +3,7 @@ package org.oiavorskyi.ssdr.jedis;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.oiavorskyi.ssdr.RedisShardSpec;
+import org.oiavorskyi.ssdr.specification.RedisSentinelSpec;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
@@ -34,8 +34,8 @@ public class ResilientJedisConnectionFactory implements InitializingBean, Dispos
     private boolean convertPipelineAndTxResults = true;
 
 
-    public ResilientJedisConnectionFactory(RedisShardSpec redisShardSpec){
-        this(redisShardSpec.getMasterName(), redisShardSpec.getSentinels(), redisShardSpec.getDb());
+    public ResilientJedisConnectionFactory(RedisSentinelSpec redisSentinelSpec){
+        this(redisSentinelSpec.getMasterName(), redisSentinelSpec.getSentinels(), redisSentinelSpec.getPassword(), redisSentinelSpec.getDatabaseIndex());
     }
 
     public ResilientJedisConnectionFactory(String masterHostName, Set<String> sentinels) {
