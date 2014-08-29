@@ -11,6 +11,8 @@ public enum PropertyKeys {
 
     REDIS_SENTINEL1_HOST("redis.sentinel1.host"),
     REDIS_SENTINEL1_PORT("redis.sentinel1.port"),
+    REDIS_SENTINEL2_HOST("redis.sentinel2.host"),
+    REDIS_SENTINEL2_PORT("redis.sentinel2.port"),
     REDIS_MASTER("redis.master.name"),
     REDIS_PASSWORD("redis.password");
 

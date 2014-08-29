@@ -35,6 +35,10 @@ public class PropertyLoader {
         return getProperty(PropertyKeys.REDIS_SENTINEL1_HOST) + ":" + getProperty(PropertyKeys.REDIS_SENTINEL1_PORT);
     }
 
+    public static String getSentinel2HostPort(){
+        return getProperty(PropertyKeys.REDIS_SENTINEL2_HOST) + ":" + getProperty(PropertyKeys.REDIS_SENTINEL2_PORT);
+    }
+
     public static int getSentinel1Port(){
         return Integer.parseInt(getProperty(PropertyKeys.REDIS_SENTINEL1_PORT));
     }
